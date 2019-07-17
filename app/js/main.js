@@ -2,8 +2,18 @@ import '../Components/SnapRouter/SnapRouter.js';
 
 const routerView = document.querySelector('snap-routed');
 
-routerView.addRoute(/ausschreibung/, '/Components/Pages/snap-ausschreibung.js');
-routerView.addRoute(/impressum/, '/Components/Pages/snap-impressum.js');
-routerView.addRoute(/faq/, '/Components/Pages/snap-faq.js');
-routerView.addRoute(/loading/, '/Components/SnapRouter/snap-loading.js');
-routerView.addRoute(/\/$/, '/Components/Pages/snap-home.js');
+routerView.addRoute(/ausschreibung/, () =>
+  import('../Components/Pages/snap-ausschreibung.js').then(m => m.default)
+);
+routerView.addRoute(/impressum/, () =>
+  import('../Components/Pages/snap-impressum.js').then(m => m.default)
+);
+routerView.addRoute(/faq/, () =>
+  import('../Components/Pages/snap-faq.js').then(m => m.default)
+);
+routerView.addRoute(/loading/, () =>
+  import('../Components/SnapRouter/snap-loading.js').then(m => m.default)
+);
+routerView.addRoute(/\/$/, () =>
+  import('../Components/Pages/snap-home.js').then(m => m.default)
+);

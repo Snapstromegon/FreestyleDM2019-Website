@@ -23,12 +23,14 @@ export default class SnapRouted extends HTMLElement {
     super();
     this.routes = [];
     this.errorTag = ErrorTag;
-    const shadowRoot = this.attachShadow({mode: 'open'})
+    const shadowRoot = this.attachShadow({ mode: 'open' });
     shadowRoot.appendChild(template.content.cloneNode(true));
     this.loadingElement = shadowRoot.querySelector('snap-loading');
     this.loadingElement.loading = true;
     window.addEventListener('popstate', (...args) => this.popped(...args));
-    window.addEventListener('load', (...args) => this.navigate(window.location.href));
+    window.addEventListener('load', (...args) =>
+      this.navigate(window.location.href)
+    );
   }
 
   popped(e) {
@@ -46,13 +48,11 @@ export default class SnapRouted extends HTMLElement {
     this.loadingElement.loading = true;
     this.innerHTML = '';
     let defaultTag;
-    if(matchedRoute){
-      try{
-        defaultTag = (await import(matchedRoute.module)).default;
-      } catch(e){
+    if (matchedRoute) {
+      defaultTag = await matchedRoute.loadCB().catch(e => {
         console.error(e);
-        defaultTag = this.errorTag;
-      }
+        return this.errorTag;
+      });
     } else {
       defaultTag = this.errorTag;
     }
@@ -60,14 +60,14 @@ export default class SnapRouted extends HTMLElement {
     this.loadingElement.loading = false;
   }
 
-  updateLinks(){
+  updateLinks() {
     document.querySelectorAll('a[is=snap-link]').forEach(link => {
       link.active = window.location == link.href;
     });
   }
 
-  addRoute(path, module) {
-    const addedRoute = new Route(path, module);
+  addRoute(path, loadCB) {
+    const addedRoute = new Route(path, loadCB);
     this.routes.push(addedRoute);
   }
 
@@ -77,9 +77,9 @@ export default class SnapRouted extends HTMLElement {
 }
 
 class Route {
-  constructor(path, module) {
+  constructor(path, loadCB) {
     this.path = path;
-    this.module = module;
+    this.loadCB = loadCB;
   }
 
   /**
