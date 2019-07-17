@@ -12,5 +12,15 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-better-rollup": "^4.0.1",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-rollup": "^2.16.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "rollup": "^1.17.0",
+    "rollup-plugin-terser": "^5.1.1"
   }
 }
