@@ -48,7 +48,7 @@ function copyRes() {
 }
 
 function clean() {
-  return src('dist', {read: false})
+  return src('dist', {read: false, allowEmpty: true})
       .pipe(g_clean());
 }
 
