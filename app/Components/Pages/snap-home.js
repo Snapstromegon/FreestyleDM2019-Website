@@ -1,4 +1,5 @@
 import '../SnapDevider/SnapDevider.js';
+import '../SnapAddToHomescreen/snap-add-to-homescreen.js';
 import '../SnapHeader/SnapHeader.js';
 
 export const template = document.createElement('template');
@@ -6,6 +7,7 @@ export const template = document.createElement('template');
 template.innerHTML = `
 <snap-header></snap-header>
 <snap-devider></snap-devider>
+<snap-add-to-homescreen></snap-add-to-homescreen>
 <div class="content">
         <h2>
           Hallo und willkommen auf den Seiten der diesjährigen Freestyle DM in

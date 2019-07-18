@@ -1,11 +1,13 @@
 import '../SnapDevider/SnapDevider.js';
 import '../SnapHeader/SnapHeader.js';
+import '../SnapAddToHomescreen/snap-add-to-homescreen.js';
 
 export const template = document.createElement('template');
 
 template.innerHTML = `
 <snap-header></snap-header>
 <snap-devider></snap-devider>
+<snap-add-to-homescreen></snap-add-to-homescreen>
 <div class="content">
   <h1>Impressum</h1>
   <p>Angaben gemäß § 5 TMG</p>
