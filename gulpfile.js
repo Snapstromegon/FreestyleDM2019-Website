@@ -43,7 +43,7 @@ function buildImg() {
 }
 
 function copyRes() {
-  return src('app/{res/**,manifest.json}')
+  return src('app/{res/**,manifest.json,sw.js,robots.txt}')
     .pipe(dest('dist'));
 }
 

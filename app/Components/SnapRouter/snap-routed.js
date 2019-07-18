@@ -22,6 +22,7 @@ export default class SnapRouted extends HTMLElement {
   constructor() {
     super();
     this.routes = [];
+    this.currentRoute = undefined;
     this.errorTag = ErrorTag;
     const shadowRoot = this.attachShadow({ mode: 'open' });
     shadowRoot.appendChild(template.content.cloneNode(true));
@@ -43,7 +44,11 @@ export default class SnapRouted extends HTMLElement {
   }
 
   async navigate(url) {
-    const matchedRoute = await this.findRoute(url);
+    const matchedRoute = this.findRoute(url);
+    if(matchedRoute == this.currentRoute){
+      return;
+    }
+    this.currentRoute = matchedRoute;
     this.updateLinks();
     this.loadingElement.loading = true;
     this.innerHTML = '';
@@ -71,7 +76,7 @@ export default class SnapRouted extends HTMLElement {
     this.routes.push(addedRoute);
   }
 
-  async findRoute(url) {
+  findRoute(url) {
     return this.routes.find(route => route.matches(url));
   }
 }

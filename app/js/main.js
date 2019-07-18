@@ -1,5 +1,9 @@
 import '../Components/SnapRouter/SnapRouter.js';
 
+navigator.serviceWorker.register('/sw.js', {
+  scope: '/'
+});
+
 const routerView = document.querySelector('snap-routed');
 
 routerView.addRoute(/ausschreibung/, () =>
