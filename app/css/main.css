@@ -21,7 +21,7 @@ body {
   /* background-color: #fff; */
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto minmax(4rem, auto);
+  grid-template-rows: auto 1fr auto auto;
   grid-template-areas: 'header' 'main' 'footer' 'aside';
 }
 
@@ -56,7 +56,7 @@ footer {
 aside {
   grid-area: aside;
   background: var(--color-blue-grey);
-  position: fixed;
+  position: -webkit-sticky;
   position: sticky;
   bottom: 0px;
   width: 100%;
@@ -87,6 +87,7 @@ aside a span {
 }
 
 aside a {
+  height: 4rem;
   color: #fff;
   text-decoration: none;
   text-align: center;

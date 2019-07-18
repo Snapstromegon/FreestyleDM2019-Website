@@ -1,6 +1,7 @@
 const { series, src, dest, parallel } = require('gulp');
 // const rollup = require('gulp-rollup');
 const rollup = require('rollup');
+const clean = require('gulp-clean');
 const cleanCSS = require('gulp-clean-css');
 const htmlmin = require('gulp-htmlmin');
 const { terser } = require('rollup-plugin-terser');
@@ -34,8 +35,14 @@ function copyRes() {
     .pipe(dest('dist'));
 }
 
+function cleanDist() {
+  return src('dist', {read: false})
+      .pipe(clean());
+}
+
 exports.copyRes = copyRes;
 exports.buildHTML = buildHTML;
 exports.buildCSS = buildCSS;
 exports.buildJS = buildJS;
-exports.default = parallel(buildJS, buildCSS, buildHTML, copyRes);
+exports.cleanDist = cleanDist;
+exports.default = series(cleanDist, parallel(buildJS, buildCSS, buildHTML, copyRes));
