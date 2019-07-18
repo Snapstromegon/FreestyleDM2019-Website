@@ -22,9 +22,8 @@ template.innerHTML = `
       <li><strong>Benachrichtigungen:</strong> Du kannst in der Startliste am unteren Ende markieren, welcher Starter dich interessiert und dann wirst du kurz vor seinem Start benachrichtigt.</li>
     </ul>
   </p>
-
-  <snap-add-to-homescreen></snap-add-to-homescreen>
 </div>
+<snap-add-to-homescreen></snap-add-to-homescreen>
 `;
 
 export default class SnapPWA extends HTMLElement{
