@@ -1,8 +1,10 @@
 import '../Components/SnapRouter/SnapRouter.js';
 
-navigator.serviceWorker.register('/sw.js', {
-  scope: '/'
-});
+if(navigator.serviceWorker){
+  navigator.serviceWorker.register('/sw.js', {
+    scope: '/'
+  });
+}
 
 const routerView = document.querySelector('snap-routed');
 
@@ -15,9 +17,10 @@ routerView.addRoute(/impressum/, () =>
 routerView.addRoute(/faq/, () =>
   import('../Components/Pages/snap-faq.js').then(m => m.default)
 );
-routerView.addRoute(/pwa/, () =>
-  import('../Components/Pages/snap-pwa.js').then(m => m.default)
-);
+routerView.addRoute(/pwa/, () =>{
+  debugger;
+  return import('../Components/Pages/snap-pwa.js').then(m => m.default)
+});
 routerView.addRoute(/eventmap/, () =>
   import('../Components/Pages/snap-map.js').then(m => m.default)
 );
