@@ -18,7 +18,6 @@ html {
 
 body {
   min-height: 100vh;
-  /* background-color: #fff; */
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto auto;
@@ -184,6 +183,7 @@ p {
     text-align: left;
     display: block;
     padding: 0.5rem 1rem;
+    height: auto;
   }
 
   aside a::before {
@@ -336,4 +336,10 @@ table.white {
 .scroller {
   width: 100%;
   overflow: auto;
+}
+
+.gmaps{
+  border: none;
+  width: 100%;
+  height: 25rem;
 }

@@ -11,6 +11,9 @@ routerView.addRoute(/impressum/, () =>
 routerView.addRoute(/faq/, () =>
   import('../Components/Pages/snap-faq.js').then(m => m.default)
 );
+routerView.addRoute(/map/, () =>
+  import('../Components/Pages/snap-map.js').then(m => m.default)
+);
 routerView.addRoute(/loading/, () =>
   import('../Components/SnapRouter/snap-loading.js').then(m => m.default)
 );
