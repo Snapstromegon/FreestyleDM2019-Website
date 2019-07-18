@@ -25,8 +25,8 @@ pipeline {
           sh 'mkdir deliver/dist'
           sh 'mkdir deliver/backend'
           sh 'cp package.json deliver/package.json'
-          sh "cp -r dist/ deliver/dist/"
-          sh "cp -r backend/ deliver/backend/"
+          sh "cp -r dist/ deliver/"
+          sh "cp -r backend/ deliver/"
         }
       }
     }
