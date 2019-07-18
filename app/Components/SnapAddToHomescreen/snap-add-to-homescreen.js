@@ -36,7 +36,7 @@ template.innerHTML = `
   padding: 1rem;
   border: none;
 }
-.material-icons {
+a {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -44,16 +44,13 @@ template.innerHTML = `
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
-  display: inline-block;
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
-}
-
-a {
-  height: 100%;
+  display: flex;
+  align-items: center;
   padding: 1rem;
   color: #fff;
   text-decoration: none;
