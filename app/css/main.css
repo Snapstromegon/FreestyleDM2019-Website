@@ -10,6 +10,7 @@
   --color-yellow: #fcbf49;
   --color-blue-grey: #3f5a69;
   --color-blue-light: #4093bf;
+  --color-blue-dark: #002133;
 }
 
 html {
@@ -55,13 +56,16 @@ footer {
 }
 aside {
   grid-area: aside;
-  background: var(--color-blue-grey);
   position: -webkit-sticky;
+  background: var(--color-blue-dark);
   position: sticky;
   bottom: 0px;
   width: 100%;
   min-width: 0;
   z-index: 2;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 aside::before {
@@ -79,7 +83,9 @@ aside nav {
   grid-auto-columns: minmax(auto, 10rem);
   grid-auto-flow: column;
   justify-content: center;
-  height: 100%;
+  background: var(--color-blue-grey);
+  flex-shrink: 0;
+  /* height: 100%; */
 }
 
 aside a span {
@@ -143,9 +149,15 @@ p {
   max-width: 850px;
 }
 
+snap-startlist {
+  background: var(--color-blue-dark);
+  color: #fff;
+}
+
 @media (min-width: 850px) {
   body {
     grid-template-columns: 20rem 1fr;
+    height: 100vh;
     grid-template-rows: auto 1fr auto;
     grid-template-areas: 'aside header' 'aside main' 'footer main';
   }
@@ -155,6 +167,8 @@ p {
     max-height: 100vh;
     top: 0px;
     padding: 1rem 0rem;
+    justify-content: space-between;
+    background: var(--color-blue-grey);
   }
 
   aside::before {
@@ -216,6 +230,14 @@ p {
 
   footer a[active] {
     background: var(--color-blue);
+  }
+
+  main{
+    overflow: auto;
+  }
+
+  snap-startlist{
+    background: var(--color-blue-grey);
   }
 }
 /* latin-ext */

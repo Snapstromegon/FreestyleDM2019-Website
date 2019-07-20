@@ -35,7 +35,7 @@ export default class SnapRouted extends HTMLElement {
   }
 
   popped(e) {
-    this.navigate(e.state.url);
+    this.navigate((e.state || {url: '/'}).url);
   }
 
   go(url) {
@@ -45,7 +45,7 @@ export default class SnapRouted extends HTMLElement {
 
   async navigate(url) {
     const matchedRoute = this.findRoute(url);
-    console.log(url, matchedRoute);
+    // console.log(url, matchedRoute);
     if(matchedRoute == this.currentRoute){
       return;
     }

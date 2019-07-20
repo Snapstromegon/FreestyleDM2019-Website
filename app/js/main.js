@@ -1,4 +1,5 @@
 import '../Components/SnapRouter/SnapRouter.js';
+import '../Components/SnapStartlist/snap-startlist.js';
 
 if(navigator.serviceWorker){
   navigator.serviceWorker.register('/sw.js', {

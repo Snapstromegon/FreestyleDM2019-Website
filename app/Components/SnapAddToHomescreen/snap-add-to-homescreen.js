@@ -35,6 +35,7 @@ template.innerHTML = `
   color: #fff;
   padding: 1rem;
   border: none;
+  cursor: pointer;
 }
 a {
   font-family: 'Material Icons';
@@ -87,11 +88,17 @@ export default class SnapAddToHomescreen extends HTMLElement {
     this.setAttribute('visible', '');
   }
 
+  hide(){
+    this.removeAttribute('visible');
+  }
+
   async prompt() {
     installToHomescreenPrompt.prompt();
     const userChoice = await installToHomescreenPrompt.userChoice;
     if (userChoice.outcome === 'accepted') {
       console.log('Installed to Homescreen');
+      installToHomescreenPrompt = undefined;
+      this.hide();
     } else {
       console.log('Homescreen install rejected!');
     }
