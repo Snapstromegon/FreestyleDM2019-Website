@@ -164,7 +164,7 @@ snap-startlist {
 
   aside {
     position: sticky;
-    max-height: 100vh;
+    max-height: 100%;
     top: 0px;
     padding: 1rem 0rem;
     justify-content: space-between;

@@ -64,6 +64,17 @@ template.innerHTML = `
   justify-items: center;
   align-items: center;
 }
+.markiert .is_marked{
+  display: none;
+}
+.markiert .is_marked ~ span:before{
+  content: 'star_outline';
+  transition: color .3s;
+}
+.markiert .is_marked:checked ~ span:before{
+  content: 'star';
+  color: var(--color-yellow);
+}
 ol {
   padding: 0 1rem;
 }
@@ -75,7 +86,7 @@ ol {
   <p class="startzeit">15:45</p>
   <p class="kürname">Toller Kürname</p>
   <p class="startnummer">103</p>
-  <p class="markiert">star_outline</p>
+  <label class="markiert"><input type="checkbox" class="is_marked"/><span></span></label>
 </li>-->
 </ol>
 `;
