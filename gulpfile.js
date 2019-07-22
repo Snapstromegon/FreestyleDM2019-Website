@@ -6,7 +6,6 @@ const imagemin = require('gulp-imagemin');
 const cleanCSS = require('gulp-clean-css');
 const htmlmin = require('gulp-htmlmin');
 const { terser } = require('rollup-plugin-terser');
-const path = require('path');
 
 async function buildJS() {
   const bundle = await rollup.rollup({
