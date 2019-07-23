@@ -55,10 +55,7 @@ export default class SnapRouted extends HTMLElement {
     this.innerHTML = '';
     let defaultTag;
     if (matchedRoute) {
-      defaultTag = await matchedRoute.loadCB().catch(e => {
-        console.error(e);
-        return this.errorTag;
-      });
+      defaultTag = await matchedRoute.loadCB().catch(e => this.errorTag);
     } else {
       defaultTag = this.errorTag;
     }

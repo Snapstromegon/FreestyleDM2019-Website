@@ -1,3 +1,6 @@
+import SnapStartlistCategory from './snap-startlist-category.js';
+import SnapStartlistStart from './snap-startlist-start.js';
+
 export const template = document.createElement('template');
 
 template.innerHTML = `
@@ -6,47 +9,72 @@ template.innerHTML = `
   display: block;
   overflow: auto;
 }
-:host([hiden]){
+:host([hidden]){
   display: none;
 }
-*{
-  padding: 0;
-  margin: 0;
+:host-context([expanded]) #current{
+  transform: translate(0, -100%);
 }
-.starter{
+:host-context([expanded]) #search{
+  transform: translate(0, 0);
+}
+:host-context([expanded]) slot{
+  display: initial;
+}
+:host-context([expanded]) .expand_label span:before{
+  content: 'expand_less';
+}
+slot{
+  display: none;
+}
+#preview{
   display: grid;
-  grid-template-columns: 1fr auto auto;
-  grid-template-rows: auto auto auto;
-  grid-template-areas: "fahrer kategorie markiert" "fahrer startzeit markiert" "kürname startnummer markiert";
+  grid-template-rows: auto;
+  grid-template-columns: 1fr auto;
+  padding-right: 1rem;
+  grid-template-areas: "main expand_button";
+  overflow: hidden;
+}
+.expand_label{
+  grid-area: expand_button;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  grid-gap: 0 1rem;
-  padding: .5rem 0;
-  border-top: .1rem solid #fff4;
-  list-style: none;
+  transform: rotate(180deg);
+  color: #fff;
 }
-.starter:first-child{
+#expand_button{
+  display: none;
+}
+.expand_label span:before{
+  content: 'expand_more';
+}
+#current, #search {
+  grid-area: main;
+  transition: transform .5s;
+}
+#search{
+  transform: translate(0, 100%);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+#search span:after{
+  content: 'search';
+}
+#search_field{
+  height: 100%;
+  width: 100%;
+  background: var(--color-blue-grey);
   border: none;
+  color: #fff;
+  padding: .5rem;
+  box-sizing: border-box;
 }
-.fahrer{
-  grid-area: fahrer;
+#search_field::placeholder{
+  color: #bbb;
 }
-.kategorie{
-  grid-area: kategorie;
-  text-align: right;
-}
-.startzeit{
-  grid-area: startzeit;
-  text-align: right;
-}
-.kürname{
-  grid-area: kürname;
-}
-.startnummer{
-  grid-area: startnummer;
-  text-align: right;
-}
-.markiert{
-  grid-area: markiert;
+.material-icons, #search span:after{
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -59,43 +87,127 @@ template.innerHTML = `
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
-  height: 100%;
-  display: flex;
-  justify-items: center;
-  align-items: center;
-}
-.markiert .is_marked{
-  display: none;
-}
-.markiert .is_marked ~ span:before{
-  content: 'star_outline';
-  transition: color .3s;
-}
-.markiert .is_marked:checked ~ span:before{
-  content: 'star';
-  color: var(--color-yellow);
-}
-ol {
-  padding: 0 1rem;
 }
 </style>
-<ol>
-<!--<li class="starter">
-  <h2 class="fahrer">Kim Lilien Höser</h2>
-  <p class="kategorie">EW U19</p>
-  <p class="startzeit">15:45</p>
-  <p class="kürname">Toller Kürname</p>
-  <p class="startnummer">103</p>
-  <label class="markiert"><input type="checkbox" class="is_marked"/><span></span></label>
-</li>-->
-</ol>
+<div id="preview">
+  <snap-startlist-start id="current" nostar></snap-startlist-start>
+  <div id="search"><input type="search" id="search_field" list="search_filter" placeholder="Suchen"></div>
+  <label class="expand_label material-icons"><input type="button" id="expand_button"><span></span></label>
+</div>
+<slot></slot>
+<datalist id="search_filter">
+</datalist>
 `;
+
+const dummy_startlist = [
+  {
+    category: 'Einzel Weiblich U19',
+    shortname: 'EW U19',
+    startlist: [
+      {
+        starters: [{ name: 'Kim Lilien Höser' }],
+        start: '15:45',
+        startnumber: 103,
+        name: 'Toller Kürname'
+      },
+      {
+        starters: [{ name: 'Swantje Wickert' }],
+        start: '15:45',
+        startnumber: 103,
+        name: 'Schneemann'
+      }
+    ]
+  },
+  {
+    category: 'Paar Weiblich 19+',
+    shortname: 'EW 19+',
+    startlist: [
+      {
+        starters: [{ name: 'Kim Lilien Höser' }, { name: 'Swantje Wickert' }],
+        start: '15:50',
+        startnumber: 103,
+        name: 'Paarkür'
+      }
+    ]
+  }
+];
 
 export default class SnapStartlist extends HTMLElement {
   constructor() {
     super(); // always call super() first in the constructor.
-    let shadowRoot = this.attachShadow({ mode: 'open' });
-    shadowRoot.appendChild(template.content.cloneNode(true));
+    this.root = this.attachShadow({ mode: 'open' });
+    this.root.appendChild(template.content.cloneNode(true));
+    this.root
+      .querySelector('#expand_button')
+      .addEventListener('click', e => this.toggleExpand(e), { passive: true });
+    this.root
+      .querySelector('#search_field')
+      .addEventListener('input', e => this.updateFilter(e), { passive: true });
+    this.load();
+  }
+
+  async load() {
+    const startlist = dummy_startlist;
+    this.render(startlist);
+  }
+
+  updateFilter() {
+    this.filter = this.root.querySelector('#search_field').value;
+  }
+
+  get filter(){
+    return this.getAttribute('filter');
+  }
+
+  set filter(value){
+    this.querySelectorAll('snap-startlist-category').forEach(c => c.filter = value);
+    return this.setAttribute('filter', value);
+  }
+
+  toggleExpand() {
+    document.querySelector('aside').toggleAttribute('expanded');
+  }
+
+  render(data) {
+    const firstStarterCategory = this.getFirstCategoryWithStarter(data);
+    const searchDataList = this.root.querySelector('#search_filter');
+    searchDataList.innerHTML = '';
+    const inSearchDataList = {};
+    if (firstStarterCategory) {
+      this.root
+        .querySelector('#current')
+        .render(
+          firstStarterCategory.startlist[0],
+          firstStarterCategory.shortname
+        );
+    } else {
+      this.root.querySelector('#current').render();
+    }
+    for (const startcategory of data) {
+      this.appendChild(new SnapStartlistCategory(startcategory));
+      for (const start of startcategory.startlist) {
+        if (!(start.name in inSearchDataList)) {
+          inSearchDataList[start.name] = true;
+          const option = document.createElement('option');
+          option.value = start.name;
+          option.textContent = 'Kürname';
+          searchDataList.appendChild(option);
+        }
+        for (const starter of start.starters) {
+          if (!(starter.name in inSearchDataList)) {
+            inSearchDataList[starter.name] = true;
+            const option = document.createElement('option');
+            option.value = starter.name;
+            option.textContent = 'Starter';
+            searchDataList.appendChild(option);
+          }
+        }
+      }
+    }
+  }
+
+  getFirstCategoryWithStarter(data) {
+    return data.find(c => c.startlist.length);
   }
 }
 

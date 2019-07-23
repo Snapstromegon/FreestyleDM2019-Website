@@ -66,6 +66,33 @@ aside {
   max-height: 100vh;
   display: flex;
   flex-direction: column;
+  will-change: transform;
+  animation: aside-out .15s ease-in;
+}
+/* Browser hack - prevents first splashy animation */
+aside:not(:hover) {
+  animation-duration:0s !important;
+} 
+
+aside[expanded]{
+  height: 100vh;
+  animation: aside-in .2s ease-out;
+}
+
+@keyframes aside-in{
+  from {
+    transform: translateY(80%);
+  }
+}
+
+@keyframes aside-out{
+  from {
+    height: 100vh;
+  }
+  to {
+    height: 100vh;
+    transform: translateY(66%);
+  }
 }
 
 aside::before {
@@ -236,9 +263,9 @@ snap-startlist {
     overflow: auto;
   }
 
-  snap-startlist{
+  /*snap-startlist{
     background: var(--color-blue-grey);
-  }
+  }*/
 }
 /* latin-ext */
 @font-face {
