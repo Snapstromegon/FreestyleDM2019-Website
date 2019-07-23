@@ -35,6 +35,9 @@ slot{
   grid-template-areas: "main expand_button";
   overflow: hidden;
 }
+#preview[hidden]{
+  display: none;
+}
 .expand_label{
   grid-area: expand_button;
   display: flex;
@@ -91,7 +94,7 @@ slot{
 </style>
 <div id="preview">
   <snap-startlist-start id="current" nostar></snap-startlist-start>
-  <div id="search"><input type="search" id="search_field" list="search_filter" placeholder="Suchen"></div>
+  <div id="search"><input type="search" id="search_field" list="search_filter" placeholder="Suchen" aria-label="Suchen"></div>
   <label class="expand_label material-icons"><input type="button" id="expand_button"><span></span></label>
 </div>
 <slot></slot>
@@ -99,7 +102,9 @@ slot{
 </datalist>
 `;
 
-const dummy_startlist = [
+let dummy_startlist = [];
+let dummy_startlist_ = [];
+dummy_startlist = [
   {
     category: 'Einzel Weiblich U19',
     shortname: 'EW U19',
@@ -127,6 +132,19 @@ const dummy_startlist = [
         start: '15:50',
         startnumber: 103,
         name: 'Paarkür'
+      }
+    ]
+  },
+  {
+    category: 'Großgruppe Expert',
+    shortname: 'GG E',
+    startlist: [
+      {
+        starters: [{ name: 'Kim Lilien Höser' }, { name: 'Swantje Wickert' }],
+        start: '15:50',
+        startnumber: 103,
+        name: 'Paarkür',
+        groupname: 'SSV Nümbrecht'
       }
     ]
   }
@@ -169,10 +187,15 @@ export default class SnapStartlist extends HTMLElement {
   }
 
   render(data) {
+    this.root.querySelector('#preview').removeAttribute('hidden');
     const firstStarterCategory = this.getFirstCategoryWithStarter(data);
     const searchDataList = this.root.querySelector('#search_filter');
     searchDataList.innerHTML = '';
     const inSearchDataList = {};
+    if(!data || !data.length){
+      this.root.querySelector('#preview').setAttribute('hidden', '');
+      return;
+    }
     if (firstStarterCategory) {
       this.root
         .querySelector('#current')
@@ -191,6 +214,13 @@ export default class SnapStartlist extends HTMLElement {
           const option = document.createElement('option');
           option.value = start.name;
           option.textContent = 'Kürname';
+          searchDataList.appendChild(option);
+        }
+        if (!(start.groupname in inSearchDataList)) {
+          inSearchDataList[start.groupname] = true;
+          const option = document.createElement('option');
+          option.value = start.groupname;
+          option.textContent = 'Gruppenname';
           searchDataList.appendChild(option);
         }
         for (const starter of start.starters) {

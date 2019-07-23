@@ -133,9 +133,12 @@ export default class SnapStartlistStart extends HTMLElement {
       data.name,
       ...data.starters.map(starter => starter.name)
     );
-    this.root.querySelector('.fahrer').textContent = data.starters
+    if(data.groupname){
+      this.matchingFilterValues.push(data.groupname);
+    }
+    this.root.querySelector('.fahrer').textContent = data.groupname || data.starters
       .map(s => s.name)
-      .join(', ');
+      .join(' und ');
     this.root.querySelector('.kategorie').textContent = kategorie;
     this.root.querySelector('.startzeit').textContent = data.start;
     this.root.querySelector('.kürname').textContent = data.name;
