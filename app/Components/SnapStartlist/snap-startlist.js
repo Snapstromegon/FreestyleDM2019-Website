@@ -6,10 +6,11 @@ export const template = document.createElement('template');
 template.innerHTML = `
 <style>
 :host{
-  display: block;
+  display: flex;
+  flex-direction: column;
   overflow: auto;
 }
-:host([hidden]){
+:host([hidden]), :host([empty]){
   display: none;
 }
 :host-context([expanded]) #current{
@@ -26,6 +27,7 @@ template.innerHTML = `
 }
 slot{
   display: none;
+  overflow: auto;
 }
 #preview{
   display: grid;
@@ -34,6 +36,7 @@ slot{
   padding-right: 1rem;
   grid-template-areas: "main expand_button";
   overflow: hidden;
+  flex-shrink: 0;
 }
 #preview[hidden]{
   display: none;
@@ -90,6 +93,23 @@ slot{
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 850px) {
+  #current{
+    transform: translate(0, -100%);
+  }
+  #search{
+    transform: translate(0, 0);
+  }
+  #preview{
+    padding: 0;
+  }
+  slot{
+    display: initial;
+  }
+  .expand_label{
+    display: none;
+  }
 }
 </style>
 <div id="preview">
@@ -187,13 +207,13 @@ export default class SnapStartlist extends HTMLElement {
   }
 
   render(data) {
-    this.root.querySelector('#preview').removeAttribute('hidden');
+    this.removeAttribute('empty');
     const firstStarterCategory = this.getFirstCategoryWithStarter(data);
     const searchDataList = this.root.querySelector('#search_filter');
     searchDataList.innerHTML = '';
     const inSearchDataList = {};
     if(!data || !data.length){
-      this.root.querySelector('#preview').setAttribute('hidden', '');
+      this.setAttribute('empty', '');
       return;
     }
     if (firstStarterCategory) {

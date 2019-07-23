@@ -4,7 +4,6 @@ template.innerHTML = `
 <style>
 :host{
   display: block;
-  overflow: auto;
 }
 :host([hidden]){
   display: none;
