@@ -236,7 +236,7 @@ export default class SnapStartlist extends HTMLElement {
           option.textContent = 'Kürname';
           searchDataList.appendChild(option);
         }
-        if (!(start.groupname in inSearchDataList)) {
+        if (start.groupname && !(start.groupname in inSearchDataList)) {
           inSearchDataList[start.groupname] = true;
           const option = document.createElement('option');
           option.value = start.groupname;
