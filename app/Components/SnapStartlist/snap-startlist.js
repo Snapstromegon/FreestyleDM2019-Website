@@ -25,6 +25,9 @@ template.innerHTML = `
 :host-context([expanded]) .expand_label span:before{
   content: 'expand_less';
 }
+:host-context(*) .expand_label{
+  display: flex;
+}
 slot{
   display: none;
   overflow: auto;
@@ -33,7 +36,6 @@ slot{
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: 1fr auto;
-  padding-right: 1rem;
   grid-template-areas: "main expand_button";
   overflow: hidden;
   flex-shrink: 0;
@@ -43,11 +45,12 @@ slot{
 }
 .expand_label{
   grid-area: expand_button;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   transform: rotate(180deg);
   color: #fff;
+  padding-left: 1rem;
 }
 #expand_button{
   display: none;
