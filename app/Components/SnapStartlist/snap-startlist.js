@@ -1,5 +1,6 @@
 import SnapStartlistCategory from './snap-startlist-category.js';
-import SnapStartlistStart from './snap-startlist-start.js';
+import './snap-startlist-start.js';
+import '../SnapUtils/snap-ripple.js';
 
 export const template = document.createElement('template');
 
@@ -46,6 +47,7 @@ slot{
 .expand_label{
   grid-area: expand_button;
   display: none;
+  height: 100%;
   justify-content: center;
   align-items: center;
   transform: rotate(180deg);
@@ -67,6 +69,9 @@ slot{
   padding: 1rem;
   display: flex;
   align-items: center;
+}
+#search snap-ripple{
+  width: 100%;
 }
 #search span:after{
   content: 'search';
@@ -117,8 +122,8 @@ slot{
 </style>
 <div id="preview">
   <snap-startlist-start id="current" nostar></snap-startlist-start>
-  <div id="search"><input type="search" id="search_field" list="search_filter" placeholder="Suchen" aria-label="Suchen"></div>
-  <label class="expand_label material-icons"><input type="button" id="expand_button"><span></span></label>
+  <div id="search"><snap-ripple><input type="search" id="search_field" list="search_filter" placeholder="Suchen" aria-label="Suchen"></snap-ripple></div>
+  <snap-ripple><label class="expand_label material-icons"><input type="button" id="expand_button"><span></span></label></snap-ripple>
 </div>
 <slot></slot>
 <datalist id="search_filter">

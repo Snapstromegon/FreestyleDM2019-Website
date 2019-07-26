@@ -1,4 +1,5 @@
 import '../SnapRouter/snap-link.js';
+import '../SnapUtils/snap-ripple.js';
 export let installToHomescreenPrompt;
 
 export const template = document.createElement('template');
@@ -29,7 +30,7 @@ template.innerHTML = `
 
 #installToHomescreen{
   height: 100%;
-  flex-grow: 1;
+  width: 100%;
   font-size: 1.2rem;
   background: none;
   color: #fff;
@@ -57,11 +58,14 @@ a {
   text-decoration: none;
   border-left: .1rem dotted #fff;
 }
+.grow{
+  flex-grow:1;
+}
 </style>
 <div class="content">
   <div class="installButton">
-    <button id="installToHomescreen">Zum Startbildschirm hinzufügen</button>
-    <a is="snap-link" href="/pwa" class="material-icons">help</a>
+    <snap-ripple class="grow"><button id="installToHomescreen">Zum Startbildschirm hinzufügen</button></snap-ripple>
+    <snap-ripple><a is="snap-link" href="/pwa" class="material-icons">help</a></snap-ripple>
   </div>
 </div>
 `;

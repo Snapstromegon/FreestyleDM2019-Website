@@ -1,7 +1,7 @@
 import '../SnapDevider/SnapDevider.js';
 import '../SnapHeader/SnapHeader.js';
-import '../SnapBlocks/snap-info.js';
-import '../SnapBlocks/snap-warning.js';
+import '../SnapUtils/snap-info.js';
+import '../SnapUtils/snap-warning.js';
 import '../SnapAddToHomescreen/snap-add-to-homescreen.js';
 
 export const template = document.createElement('template');
