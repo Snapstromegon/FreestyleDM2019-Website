@@ -117,6 +117,9 @@ slot{
   }
   .expand_label{
     display: none;
+  }  
+  :host-context(*) .expand_label{
+    display: none;
   }
 }
 </style>
