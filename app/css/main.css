@@ -107,7 +107,7 @@ aside::before {
 
 aside nav {
   display: grid;
-  grid-auto-columns: minmax(auto, 10rem);
+  grid-auto-columns: 1fr;
   grid-auto-flow: column;
   justify-content: center;
   background: var(--color-blue-grey);

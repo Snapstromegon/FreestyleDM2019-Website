@@ -237,6 +237,12 @@ export default class SnapStartlist extends HTMLElement {
     } else {
       this.root.querySelector('#current').render();
     }
+    const actnames = document.createElement('optgroup');
+    actnames.label = 'Kürname';
+    const groupnames = document.createElement('optgroup');
+    groupnames.label = 'Gruppenname';
+    const starters = document.createElement('optgroup');
+    starters.label = 'Starter';
     for (const startcategory of data) {
       this.appendChild(new SnapStartlistCategory(startcategory));
       for (const start of startcategory.startlist) {
@@ -244,26 +250,26 @@ export default class SnapStartlist extends HTMLElement {
           inSearchDataList[start.name] = true;
           const option = document.createElement('option');
           option.value = start.name;
-          option.textContent = 'Kürname';
-          searchDataList.appendChild(option);
+          actnames.appendChild(option);
         }
         if (start.groupname && !(start.groupname in inSearchDataList)) {
           inSearchDataList[start.groupname] = true;
           const option = document.createElement('option');
           option.value = start.groupname;
-          option.textContent = 'Gruppenname';
-          searchDataList.appendChild(option);
+          groupnames.appendChild(option);
         }
         for (const starter of start.starters) {
           if (!(starter.name in inSearchDataList)) {
             inSearchDataList[starter.name] = true;
             const option = document.createElement('option');
             option.value = starter.name;
-            option.textContent = 'Starter';
-            searchDataList.appendChild(option);
+            starters.appendChild(option);
           }
         }
       }
+      searchDataList.appendChild(starters);
+      searchDataList.appendChild(actnames);
+      searchDataList.appendChild(groupnames);
     }
   }
 
