@@ -148,6 +148,7 @@ export default class SnapStartlist extends HTMLElement {
   }
 
   async load() {
+    console.log("update startlist");
     const resp = await fetch(
       `https://startlists.freestyledm2019.de/timeplan/json?withoutPast=true`,
       { mode: 'cors', cache: 'no-cache' }
@@ -196,6 +197,8 @@ export default class SnapStartlist extends HTMLElement {
     }
     startlist.push(currentCategory);
     this.render(startlist);
+    // console.log(apiStartlist, startlist);
+    window.setTimeout(() => this.load(), 5000);
   }
 
   updateFilter() {
@@ -219,6 +222,7 @@ export default class SnapStartlist extends HTMLElement {
 
   render(data) {
     this.removeAttribute('empty');
+    this.innerHTML = '';
     const firstStarterCategory = this.getFirstCategoryWithStarter(data);
     const searchDataList = this.root.querySelector('#search_filter');
     searchDataList.innerHTML = '';

@@ -176,7 +176,7 @@ export default class SnapStartlistStart extends HTMLElement {
     this.root.querySelector('.startzeit').textContent = `${
       DAYS[data.start.getDay()]
     } ${this.fillZero(data.start.getHours())}:${this.fillZero(
-      data.start.getHours()
+      data.start.getMinutes()
     )}`;
     this.root.querySelector('.kürname').textContent = data.name;
     this.root.querySelector(
