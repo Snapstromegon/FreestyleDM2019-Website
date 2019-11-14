@@ -133,54 +133,6 @@ slot{
 </datalist>
 `;
 
-let dummy_startlist = [];
-let dummy_startlist_ = [];
-dummy_startlist = [
-  {
-    category: 'Einzel Weiblich U19',
-    shortname: 'EW U19',
-    startlist: [
-      {
-        starters: [{ name: 'Kim Lilien Höser' }],
-        start: '15:45',
-        startnumber: 103,
-        name: 'Toller Kürname'
-      },
-      {
-        starters: [{ name: 'Swantje Wickert' }],
-        start: '15:45',
-        startnumber: 103,
-        name: 'Schneemann'
-      }
-    ]
-  },
-  {
-    category: 'Paar Weiblich 19+',
-    shortname: 'EW 19+',
-    startlist: [
-      {
-        starters: [{ name: 'Kim Lilien Höser' }, { name: 'Swantje Wickert' }],
-        start: '15:50',
-        startnumber: 103,
-        name: 'Paarkür'
-      }
-    ]
-  },
-  {
-    category: 'Großgruppe Expert',
-    shortname: 'GG E',
-    startlist: [
-      {
-        starters: [{ name: 'Kim Lilien Höser' }, { name: 'Swantje Wickert' }],
-        start: '15:50',
-        startnumber: 103,
-        name: 'Paarkür',
-        groupname: 'SSV Nümbrecht'
-      }
-    ]
-  }
-];
-
 export default class SnapStartlist extends HTMLElement {
   constructor() {
     super(); // always call super() first in the constructor.
@@ -196,7 +148,53 @@ export default class SnapStartlist extends HTMLElement {
   }
 
   async load() {
-    const startlist = dummy_startlist;
+    const resp = await fetch(
+      `https://startlists.freestyledm2019.de/timeplan/json?withoutPast=true`,
+      { mode: 'cors', cache: 'no-cache' }
+    );
+    let apiStartlist = await resp.json();
+    apiStartlist = apiStartlist.filter(e => e.data && e.data.start);
+    const startlist = [];
+    let currentCategory = undefined;
+    for (const apiStartlistEntry of apiStartlist) {
+      const entry = {
+        category:
+          apiStartlistEntry.data.event + ' ' + apiStartlistEntry.data.category
+      };
+      if (!currentCategory) {
+        currentCategory = {
+          category: entry.category,
+          shortname:
+            apiStartlistEntry.data.event[0] +
+            ' ' +
+            apiStartlistEntry.data.category,
+          startlist: []
+        };
+      }
+      if (currentCategory.category != entry.category) {
+        startlist.push(currentCategory);
+        currentCategory = {
+          category: entry.category,
+          shortname:
+            apiStartlistEntry.data.event[0] +
+            ' ' +
+            apiStartlistEntry.data.category,
+          startlist: []
+        };
+      }
+      currentCategory.startlist.push({
+        starters: apiStartlistEntry.data.start.Registrants.map(r => {
+          return { name: r.User.name };
+        }),
+        start: new Date(
+          apiStartlistEntry.started || apiStartlistEntry.expectedStartTime
+        ),
+        startnumber: apiStartlistEntry.data.start.orderPosition,
+        name: apiStartlistEntry.data.start.actName,
+        id: apiStartlistEntry.data.start.id
+      });
+    }
+    startlist.push(currentCategory);
     this.render(startlist);
   }
 
@@ -204,12 +202,14 @@ export default class SnapStartlist extends HTMLElement {
     this.filter = this.root.querySelector('#search_field').value;
   }
 
-  get filter(){
+  get filter() {
     return this.getAttribute('filter');
   }
 
-  set filter(value){
-    this.querySelectorAll('snap-startlist-category').forEach(c => c.filter = value);
+  set filter(value) {
+    this.querySelectorAll('snap-startlist-category').forEach(
+      c => (c.filter = value)
+    );
     return this.setAttribute('filter', value);
   }
 
@@ -223,7 +223,7 @@ export default class SnapStartlist extends HTMLElement {
     const searchDataList = this.root.querySelector('#search_filter');
     searchDataList.innerHTML = '';
     const inSearchDataList = {};
-    if(!data || !data.length){
+    if (!data || !data.length) {
       this.setAttribute('empty', '');
       return;
     }

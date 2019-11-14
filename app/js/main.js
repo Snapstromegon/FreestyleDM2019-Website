@@ -26,6 +26,15 @@ routerView.addRoute(/pwa/, () =>{
 routerView.addRoute(/eventmap/, () =>
   import('../Components/Pages/snap-map.js').then(m => m.default)
 );
+routerView.addRoute(/downloads/, () =>
+  import('../Components/Pages/snap-downloads.js').then(m => m.default)
+);
+routerView.addRoute(/mealplan/, () =>
+  import('../Components/Pages/snap-mealplan.js').then(m => m.default)
+);
+routerView.addRoute(/timeplan/, () =>
+  import('../Components/Pages/snap-timeplan.js').then(m => m.default)
+);
 routerView.addRoute(/loading/, () =>
   import('../Components/SnapRouter/snap-loading.js').then(m => m.default)
 );

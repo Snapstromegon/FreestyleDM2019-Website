@@ -1,5 +1,5 @@
 export const template = document.createElement('template');
-
+const DAYS = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.'];
 template.innerHTML = `
 <style>
 :host{
@@ -98,8 +98,40 @@ export default class SnapStartlistStart extends HTMLElement {
     super(); // always call super() first in the constructor.
     this.root = this.attachShadow({ mode: 'open' });
     this.root.appendChild(template.content.cloneNode(true));
+    this.root
+      .querySelector('.is_marked')
+      .addEventListener('click', e => this.toggleMarked(e));
     this.matchingFilterValues = [];
     if (start) this.render(start);
+  }
+
+  toggleMarked(e) {
+    console.log(this.start.id, e.target.checked);
+    const starred = this.getCookie();
+    if(e.target.checked){
+      starred.push(this.start.id);
+    } else {
+      starred.splice(starred.indexOf(this.start.id), 1);  
+    }
+    this.setCookie(starred);
+  }
+  setCookie(starred) {
+    document.cookie = "starred=" + JSON.stringify(starred);
+  }
+  getCookie() {
+    var name = "starred=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return JSON.parse(c.substring(name.length, c.length));
+      }
+    }
+    return [];
   }
 
   get filter() {
@@ -109,7 +141,7 @@ export default class SnapStartlistStart extends HTMLElement {
   set filter(value) {
     let matchesFilter = false;
     for (const candidate of this.matchingFilterValues) {
-      if(candidate.toLowerCase().includes(value.toLowerCase())){
+      if (candidate.toLowerCase().includes(value.toLowerCase())) {
         matchesFilter = true;
       }
     }
@@ -122,6 +154,7 @@ export default class SnapStartlistStart extends HTMLElement {
   }
 
   render(data, kategorie) {
+    this.start = data;
     this.matchingFilterValues = [];
     if (!data) {
       this.setAttribute('hidden', '');
@@ -132,18 +165,30 @@ export default class SnapStartlistStart extends HTMLElement {
       data.name,
       ...data.starters.map(starter => starter.name)
     );
-    if(data.groupname){
+    if (data.groupname) {
       this.matchingFilterValues.push(data.groupname);
     }
-    this.root.querySelector('.fahrer').textContent = data.groupname || data.starters
-      .map(s => s.name)
-      .join(' und ');
+    this.root.querySelector('.fahrer').textContent =
+      data.starters.length > 2
+        ? `${data.starters.length} Fahrer`
+        : data.starters.map(s => s.name).join(' und ');
     this.root.querySelector('.kategorie').textContent = kategorie;
-    this.root.querySelector('.startzeit').textContent = data.start;
+    this.root.querySelector('.startzeit').textContent = `${
+      DAYS[data.start.getDay()]
+    } ${this.fillZero(data.start.getHours())}:${this.fillZero(
+      data.start.getHours()
+    )}`;
     this.root.querySelector('.kürname').textContent = data.name;
-    this.root.querySelector('.startnummer').textContent = `#${
-      data.startnumber
-    }`;
+    this.root.querySelector(
+      '.startnummer'
+    ).textContent = `#${data.startnumber}`;
+    if(this.getCookie().indexOf(this.start.id) != -1){
+      this.root.querySelector('.is_marked').checked = true;
+    }
+  }
+
+  fillZero(n) {
+    return n < 10 ? `0${n}` : n;
   }
 }
 

@@ -15,13 +15,13 @@ template.innerHTML = `
   <p>
     Wenn ihr unsere Website zum Startbildschirm hinzufügt könnt ihr diese nicht nur schneller wiederfinden, sondern diese wie eine App nutzen (ohne die Adresszeile oben).
   </p>
-  <p>
+  <!--<p>
     Diese Website kann übrigens noch mehr. Hier noch einige unserer Features:
     <ul>
       <li><strong>Offline lesen:</strong> Jede Seite, die du schonmal aufgerufen hast ist ab da an auch offline verfügbar.</li>
       <li><strong>Benachrichtigungen:</strong> Du kannst in der Startliste am unteren Ende markieren, welcher Starter dich interessiert und dann wirst du kurz vor seinem Start benachrichtigt.</li>
     </ul>
-  </p>
+  </p>-->
 </div>
 <snap-add-to-homescreen></snap-add-to-homescreen>
 `;
