@@ -171,7 +171,7 @@ export default class SnapStartlistStart extends HTMLElement {
     this.root.querySelector('.fahrer').textContent =
       data.starters.length > 2
         ? `${data.starters.length} Fahrer`
-        : data.starters.map(s => s.name).join(' und ');
+        : data.starters.map(s => s.name).sort().join(' und ');
     this.root.querySelector('.kategorie').textContent = kategorie;
     this.root.querySelector('.startzeit').textContent = `${
       DAYS[data.start.getDay()]
