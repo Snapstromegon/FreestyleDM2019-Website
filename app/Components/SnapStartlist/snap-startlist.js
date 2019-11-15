@@ -275,6 +275,7 @@ export default class SnapStartlist extends HTMLElement {
       searchDataList.appendChild(actnames);
       searchDataList.appendChild(groupnames);
     }
+    this.filter = this.filter;
   }
 
   getFirstCategoryWithStarter(data) {
