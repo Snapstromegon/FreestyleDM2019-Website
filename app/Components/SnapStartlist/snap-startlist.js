@@ -206,7 +206,7 @@ export default class SnapStartlist extends HTMLElement {
   }
 
   get filter() {
-    return this.getAttribute('filter');
+    return this.getAttribute('filter') || "";
   }
 
   set filter(value) {
