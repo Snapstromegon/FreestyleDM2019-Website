@@ -195,7 +195,9 @@ export default class SnapStartlist extends HTMLElement {
         id: apiStartlistEntry.data.start.id
       });
     }
-    startlist.push(currentCategory);
+    if(currentCategory){
+      startlist.push(currentCategory);
+    }
     this.render(startlist);
     // console.log(apiStartlist, startlist);
     window.setTimeout(() => this.load(), 5000);
