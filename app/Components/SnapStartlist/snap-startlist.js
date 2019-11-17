@@ -281,7 +281,7 @@ export default class SnapStartlist extends HTMLElement {
   }
 
   getFirstCategoryWithStarter(data) {
-    return data.find(c => c.startlist.length);
+    return data.find(c => (c.startlist || []).length);
   }
 }
 
