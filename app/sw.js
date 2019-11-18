@@ -15,6 +15,7 @@ self.addEventListener('install', evt => {
   evt.waitUntil(async () => {
     await precache();
     console.log('CACHED EVERYTHING');
+    await clients.claim()
   });
 });
 
