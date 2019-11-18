@@ -49,9 +49,11 @@ self.addEventListener('fetch', event => {
       let request = event.request;
       const requestURL = new URL(request.url);
       if (
-        request.mode === 'navigate' ||
-        (!requestURL.pathname.includes('.') && requestURL.href.startsWith(self.registration.scope))
+        (request.mode === 'navigate' && !requestURL.pathname.includes('.')) ||
+        ((!requestURL.pathname.includes('.')) && requestURL.href.startsWith(self.registration.scope))
       ) {
+        console.log(requestURL)
+        console.log("transfer to root")
         request = new Request('/');
       }
 

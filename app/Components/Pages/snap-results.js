@@ -11,13 +11,13 @@ template.innerHTML = `
         <h2>
           Ergebnisse
         </h2>
-        <h3><a href="/res/pdf/Ergebnisse_ODM_einzel.pdf">Einzelküren</a></h3>
-        <h3><a href="/res/pdf/Ergebnisse_ODM_paar.pdf">Paarküren</a></h3>
-        <h3><a href="/res/pdf/Ergebnisse_ODM_gruppe.pdf">Gruppenküren</a></h3>
+        <h3><a target="_blank" href="/res/pdf/Ergebnisse_ODM_einzel.pdf">Einzelküren</a></h3>
+        <h3><a target="_blank" href="/res/pdf/Ergebnisse_ODM_paar.pdf">Paarküren</a></h3>
+        <h3><a target="_blank" href="/res/pdf/Ergebnisse_ODM_gruppe.pdf">Gruppenküren</a></h3>
       </div>
 `;
 
-export default class SnapFaQ extends HTMLElement{
+export default class SnapResults extends HTMLElement{
   constructor() {
     super(); // always call super() first in the constructor.
     // let shadowRoot = this.attachShadow({mode: 'open'});
@@ -25,4 +25,4 @@ export default class SnapFaQ extends HTMLElement{
   }
 }
 
-window.customElements.define('snap-faq', SnapFaQ);
+window.customElements.define('snap-results', SnapResults);
