@@ -38,6 +38,9 @@ routerView.addRoute(/timeplan/, () =>
 routerView.addRoute(/loading/, () =>
   import('../Components/SnapRouter/snap-loading.js').then(m => m.default)
 );
+routerView.addRoute(/results/, () =>
+  import('../Components/Pages/snap-results.js').then(m => m.default)
+);
 routerView.addRoute(/\/$/, () =>
   import('../Components/Pages/snap-home.js').then(m => m.default)
 );
