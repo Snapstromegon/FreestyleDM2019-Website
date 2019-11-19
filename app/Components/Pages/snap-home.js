@@ -17,6 +17,7 @@ template.innerHTML = `
         <h3><a href="https://konstantinhoehne.de/2019/11/videos-dm-freestyle-nuembrecht/">Livestream / Videos</a></h3>
         <h3><a href="https://photos.google.com/share/AF1QipOMWaXTE8NgSxdFdsZqQAtX7G1LWUJC1pnup230Qsrpdtow-DqXLFLFI2_O4ij3KA?key=clNkaHZCXzVnRzlPV1k1S1JzZGhJMWlySHloUW53">Bilder Freitag</a></h3>
         <h3><a href="https://photos.app.goo.gl/P3ZZWJ3FzFMwWZGJA">Bilder Samstag</a></h3>
+        <h3><a href="https://photos.app.goo.gl/oYLGymkTDZpS4b43A">Bilder Sonntag</a></h3>
 
         <p>
           Wir freuen uns über dein Interesse an unserer Veranstaltung und wollen
