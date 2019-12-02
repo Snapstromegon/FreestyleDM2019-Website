@@ -10,10 +10,10 @@ template.innerHTML = `
     Was ist "Zum Startbildschirm hinzufügen"?
   </h2>
   <p>
-    Wie auch schon bei der ODM 2019 möchten wir euch auch bei der Freestyle DM 2019 mit dem neusten Stand der Technik den Wettbewerbsablauf erleichtern. Hierzu haben wir unter anderem diese Website entworfen, welche euch vor und während des Wettkampfes unterstützen soll.
+    Wie auch schon bei der ODM 2016 möchten wir euch auch bei der Freestyle DM 2019 mit dem neusten Stand der Technik den Wettbewerbsablauf erleichtern. Hierzu haben wir unter anderem diese Website entworfen, welche euch vor und während des Wettkampfes unterstützen soll.
   </p>
   <p>
-    Wenn ihr unsere Website zum Startbildschirm hinzufügt könnt ihr diese nicht nur schneller wiederfinden, sondern diese wie eine App nutzen (ohne die Adresszeile oben).
+    Wenn ihr unsere Website zum Startbildschirm hinzufügt könnt ihr diese nicht nur schneller wiederfinden, sondern auch wie eine App nutzen (ohne die Adresszeile oben).
   </p>
   <!--<p>
     Diese Website kann übrigens noch mehr. Hier noch einige unserer Features:

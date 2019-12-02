@@ -13,8 +13,7 @@ template.innerHTML = `
   <a href="./res/pdf/Ausschreibung Freestyle DM2019 Druckfreundlich.pdf">Ausschreibung - Druckfreundlich</a><br>
   <a href="./res/pdf/Moderationsbogen.pdf">Moderationsbogen</a><br>
   <a href="./res/pdf/Infoblatt%20Teilnehmer%20DM19.pdf">Infoblatt Teilnehmer</a>
-
-      </div>
+</div>
 `;
 
 export default class SnapDownloads extends HTMLElement{

@@ -46,7 +46,7 @@ export default class SnapRouted extends HTMLElement {
   async navigate(url) {
     const matchedRoute = this.findRoute(url);
     // console.log(url, matchedRoute);
-    if(matchedRoute == this.currentRoute){
+    if(matchedRoute == this.currentRoute && this.currentRoute){
       return;
     }
     this.currentRoute = matchedRoute;
