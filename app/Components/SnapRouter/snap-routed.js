@@ -49,15 +49,13 @@ export default class SnapRouted extends HTMLElement {
     if(matchedRoute == this.currentRoute && this.currentRoute){
       return;
     }
+    this.innerHTML = '';
     this.currentRoute = matchedRoute;
     this.updateLinks();
     this.loadingElement.loading = true;
-    this.innerHTML = '';
-    let defaultTag;
+    let defaultTag = this.errorTag;
     if (matchedRoute) {
       defaultTag = await matchedRoute.loadCB().catch(e => this.errorTag);
-    } else {
-      defaultTag = this.errorTag;
     }
     this.appendChild(new defaultTag());
     this.loadingElement.loading = false;
