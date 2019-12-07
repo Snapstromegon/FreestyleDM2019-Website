@@ -11,7 +11,7 @@ template.innerHTML = `
   flex-direction: column;
   overflow: auto;
 }
-:host([hidden]), :host([empty]){
+:host([hidden]), :host(:empty){
   display: none;
 }
 :host-context([expanded]) #current{
@@ -223,14 +223,12 @@ export default class SnapStartlist extends HTMLElement {
   }
 
   render(data) {
-    this.removeAttribute('empty');
     this.innerHTML = '';
     const firstStarterCategory = this.getFirstCategoryWithStarter(data);
     const searchDataList = this.root.querySelector('#search_filter');
     searchDataList.innerHTML = '';
     const inSearchDataList = {};
     if (!data || !data.length) {
-      this.setAttribute('empty', '');
       return;
     }
     if (firstStarterCategory) {
