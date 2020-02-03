@@ -21,7 +21,7 @@
     "gulp-clean-css": "^4.2.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-imagemin": "^7.1.0",
-    "gulp-rollup": "^2.16.2",
+    "gulp-rollup": "^2.17.0",
     "gulp-sourcemaps": "^2.6.5",
     "rollup": "^1.17.0",
     "rollup-plugin-terser": "^5.2.0"
